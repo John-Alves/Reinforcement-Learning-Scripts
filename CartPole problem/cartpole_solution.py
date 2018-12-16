@@ -74,12 +74,10 @@ def atualiza_Q(tabela_Q, acao, estado, R, obs, alfa, gama):
     '''
     Q(s,a) = Q(s,a) + alfa * (R + gama * Q(s', a') - Q(s,a))
     '''
+    # Calcula o valor de Q(s',a')
     n_estado = obter_estado(obs)
-    if n_estado == -1: 
-        valor_fut = 0
-    else:
-        valor_fut = tabela_Q[n_estado][acao]
-    
+    valor_fut = tabela_Q[n_estado][acao]
+    # Calcula o novo Q(s,a)
     tabela_Q[estado][acao] += alfa * (R + (gama * valor_fut) - tabela_Q[estado][acao])
     return tabela_Q
 
@@ -95,7 +93,7 @@ gama = 0.99
 
 # Executa os episodios atualizando a tabela Q
 steps_res = []
-total_epi = 10000
+total_epi = 1000
 for i in range(total_epi):
     # Reseta o ambiente (volta para o estado inicial)
     obs = env.reset()
